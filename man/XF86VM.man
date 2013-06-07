@@ -20,91 +20,83 @@
 .TH XF86VIDMODE __libmansuffix__ __vendorversion__
 .SH NAME
 XF86VidModeQueryExtension, XF86VidModeQueryVersion, XF86VidModeSetClientVersion, XF86VidModeGetModeLine, XF86VidModeGetAllModeLines, XF86VidModeDeleteModeLine, XF86VidModeModModeLine, XF86VidModeValidateModeLine, XF86VidModeSwitchMode, XF86VidModeSwitchToMode, XF86VidModeLockModeSwitch, XF86VidModeGetMonitor, XF86VidModeGetViewPort, XF86VidModeSetViewPort, XF86VidModeGetDotClocks, XF86VidModeGetGamma, XF86VidModeSetGamma, XF86VidModeGetGammaRamp, XF86VidModeSetGammaRamp, XF86VidModeGetGammaRampSize, XF86VidModeGetPermissions \- Extension library for the XFree86-VidMode X extension
-.SH FUNCTIONS
+.SH SYNOPSIS
 .nf
-.LP
+
 \&#include <X11/extensions/xf86vmode.h>
-.LP
+
 Bool XF86VidModeQueryExtension(
     Display *\fIdisplay\fP\^,
     int *\fIevent_base_return\fP\^,
     int *\fIerror_base_return\fP\^);
-.LP
+
 Bool XF86VidModeQueryVersion(
     Display *\fIdisplay\fP\^,
     int *\fImajor_version_return\fP\^,
     int *\fIminor_version_return\fP\^);
-.LP
+
 Bool XF86VidModeSetClientVersion(
     Display *\fIdisplay\fP\^);
-.LP
+
 Bool XF86VidModeGetModeLine(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     int *\fIdotclock_return\fP\^,
     XF86VidModeModeLine *\fImodeline\fP\^);
-.LP
+
 Bool XF86VidModeGetAllModeLines(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     int *\fImodecount_return\fP\^,
     XF86VidModeModeInfo ***\fImodesinfo\fP\^);
-.ig
-.LP
-Bool XF86VidModeAddModeLine(
-    Display *\fIdisplay\fP\^,
-    int \fIscreen\fP\^,
-    XF86VidModeModeInfo *\fImodeline\fP\,
-    XF86VidModeModeInfo *\fIaftermode\fP\^);
-..
-.LP
+
 Bool XF86VidModeDeleteModeLine(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     XF86VidModeModeInfo *\fImodeline\fP\^);
-.LP
+
 Bool XF86VidModeModModeLine(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     XF86VidModeModeLine *\fImodeline\fP\^);
-.LP
+
 Status XF86VidModeValidateModeLine(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     XF86VidModeModeLine *\fImodeline\fP\^);
-.LP
+
 Bool XF86VidModeSwitchMode(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     int \fIzoom\fP\^);
-.LP
+
 Bool XF86VidModeSwitchToMode(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     XF86VidModeModeInfo *\fImodeline\fP\^);
-.LP
+
 Bool XF86VidModeLockModeSwitch(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     int \fIlock\fP\^);
-.LP
+
 Bool XF86VidModeGetMonitor(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     XF86VidModeMonitor *\fImonitor\fP\^);
-.LP
+
 Bool XF86VidModeGetViewPort(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     int *\fIx_return\fP\^,
     int *\fIy_return\fP\^);
-.LP
+
 Bool XF86VidModeSetViewPort(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     int \fIx\fP\^,
     int \fIy\fP\^);
-.LP
+
 XF86VidModeGetDotClocks(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
@@ -112,17 +104,17 @@ XF86VidModeGetDotClocks(
     int *\fInumber of clocks return\fP\^,
     int *\fImax dot clock return\fP\^,
     int **\fIclocks return\fP\^);
-.LP
+
 XF86VidModeGetGamma(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     XF86VidModeGamma *\fIGamma\fP\^);
-.LP
+
 XF86VidModeSetGamma(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
     XF86VidModeGamma *\fIGamma\fP\^);
-.LP
+
 XF86VidModeGetGammaRamp(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
@@ -130,7 +122,7 @@ XF86VidModeGetGammaRamp(
     unsigned short *\fIred array\fP\^,
     unsigned short *\fIgreen array\fP\^,
     unsigned short *\fIblue array\fP\^);
-.LP
+
 XF86VidModeSetGammaRamp(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
@@ -138,7 +130,7 @@ XF86VidModeSetGammaRamp(
     unsigned short *\fIred array\fP\^,
     unsigned short *\fIgreen array\fP\^,
     unsigned short *\fIblue array\fP\^);
-.LP
+
 XF86VidModeGetGammaRampSize(
     Display *\fIdisplay\fP\^,
     int \fIscreen\fP\^,
