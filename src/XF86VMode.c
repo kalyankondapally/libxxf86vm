@@ -422,7 +422,6 @@ XF86VidModeGetAllModeLines(Display* dpy, int screen, int* modecount,
 /*
  * GetReq replacement for use with VidMode protocols earlier than 2.0
  */
-#if !defined(UNIXCPP) || defined(ANSICPP)
 #define GetOldReq(name, oldname, req) \
         WORD64ALIGN\
 	if ((dpy->bufptr + SIZEOF(x##oldname##Req)) > dpy->bufmax)\
@@ -432,18 +431,6 @@ XF86VidModeGetAllModeLines(Display* dpy, int screen, int* modecount,
 	req->length = (SIZEOF(x##oldname##Req))>>2;\
 	dpy->bufptr += SIZEOF(x##oldname##Req);\
 	dpy->request++
-
-#else  /* non-ANSI C uses empty comment instead of "##" for token concatenation */
-#define GetOldReq(name, oldname, req) \
-        WORD64ALIGN\
-	if ((dpy->bufptr + SIZEOF(x/**/oldname/**/Req)) > dpy->bufmax)\
-		_XFlush(dpy);\
-	req = (x/**/oldname/**/Req *)(dpy->last_req = dpy->bufptr);\
-	req->reqType = X_/**/name;\
-	req->length = (SIZEOF(x/**/oldname/**/Req))>>2;\
-	dpy->bufptr += SIZEOF(x/**/oldname/**/Req);\
-	dpy->request++
-#endif
 
 Bool
 XF86VidModeAddModeLine(Display *dpy, int screen,
