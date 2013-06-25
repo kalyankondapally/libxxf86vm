@@ -299,7 +299,7 @@ XF86VidModeGetAllModeLines(Display* dpy, int screen, int* modecount,
     XF86VidModeModeInfo *mdinfptr, **modelines;
     xXF86VidModeModeInfo xmdline;
     xXF86OldVidModeModeInfo oldxmdline;
-    int i;
+    unsigned int i;
     int majorVersion, minorVersion;
     Bool protocolBug = False;
 
@@ -1016,7 +1016,7 @@ XF86VidModeGetDotClocks(Display* dpy, int screen, int *flagsPtr,
     XExtDisplayInfo *info = find_display (dpy);
     xXF86VidModeGetDotClocksReply rep;
     xXF86VidModeGetDotClocksReq *req;
-    int i, *dotclocks;
+    int *dotclocks;
     CARD32 dotclk;
     Bool result = True;
 
@@ -1045,6 +1045,8 @@ XF86VidModeGetDotClocks(Display* dpy, int screen, int *flagsPtr,
         result = False;
     }
     else {
+	unsigned int i;
+
 	for (i = 0; i < rep.clocks; i++) {
 	    _XRead(dpy, (char*)&dotclk, 4);
 	    dotclocks[i] = dotclk;
