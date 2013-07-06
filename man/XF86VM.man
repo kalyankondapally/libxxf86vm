@@ -19,7 +19,7 @@
 ..
 .TH XF86VIDMODE __libmansuffix__ __vendorversion__
 .SH NAME
-XF86VidModeQueryExtension, XF86VidModeQueryVersion, XF86VidModeSetClientVersion, XF86VidModeGetModeLine, XF86VidModeGetAllModeLines, XF86VidModeDeleteModeLine, XF86VidModeModModeLine, XF86VidModeValidateModeLine, XF86VidModeSwitchMode, XF86VidModeSwitchToMode, XF86VidModeLockModeSwitch, XF86VidModeGetMonitor, XF86VidModeGetViewPort, XF86VidModeSetViewPort, XF86VidModeGetDotClocks, XF86VidModeGetGamma, XF86VidModeSetGamma, XF86VidModeGetGammaRamp, XF86VidModeSetGammaRamp, XF86VidModeGetGammaRampSize, XF86VidModeGetPermissions \- Extension library for the XFree86-VidMode X extension
+XF86VidModeQueryExtension, XF86VidModeQueryVersion, XF86VidModeSetClientVersion, XF86VidModeGetModeLine, XF86VidModeGetAllModeLines, XF86VidModeAddModeLine, XF86VidModeDeleteModeLine, XF86VidModeModModeLine, XF86VidModeValidateModeLine, XF86VidModeSwitchMode, XF86VidModeSwitchToMode, XF86VidModeLockModeSwitch, XF86VidModeGetMonitor, XF86VidModeGetViewPort, XF86VidModeSetViewPort, XF86VidModeGetDotClocks, XF86VidModeGetGamma, XF86VidModeSetGamma, XF86VidModeGetGammaRamp, XF86VidModeSetGammaRamp, XF86VidModeGetGammaRampSize, XF86VidModeGetPermissions \- Extension library for the XFree86-VidMode X extension
 .SH SYNOPSIS
 .nf
 
@@ -49,6 +49,12 @@ Bool XF86VidModeGetAllModeLines(
     int \fIscreen\fP\^,
     int *\fImodecount_return\fP\^,
     XF86VidModeModeInfo ***\fImodesinfo\fP\^);
+
+Bool XF86VidModeAddModeLine(
+    Display *\fIdisplay\fP\^,
+    int \fIscreen\fP\^,
+    XF86VidModeModeInfo *\fImodeline\fP\,
+    XF86VidModeModeInfo *\fIaftermode\fP\^);
 
 Bool XF86VidModeDeleteModeLine(
     Display *\fIdisplay\fP\^,
@@ -160,11 +166,9 @@ the next mode, otherwise switch to the previous mode.
 Indicates that mode switching should be locked, if non-zero.
 .IP \fImodeline\fP 2i
 Specifies or returns the timing values for a video mode.
-.ig
 .IP \fIaftermode\fP 2i
 Specifies the timing values for the video mode after which the
 new mode will added.
-..
 .IP \fImodesinfo\fP 2i
 Returns the timing values and dotclocks for all of the available
 video modes.
@@ -287,7 +291,6 @@ function can be used to change the settings of the current video mode
 provided the requested settings are valid (e.g. they don't exceed the
 capabilities of the monitor).
 .PP
-.ig
 To add a mode to the list of available modes, the
 .ZN XF86VidModeAddModeLine
 function can be used.
@@ -307,7 +310,6 @@ If the
 parameter is zero, the mode will be added
 after the current mode.
 .PP
-..
 Modes can be deleted with the
 .ZN XF86VidModeDeleteModeLine
 function.  The specified mode must match an existing mode.
