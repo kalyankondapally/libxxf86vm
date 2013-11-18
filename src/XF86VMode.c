@@ -41,17 +41,6 @@ from Kaleb S. KEITHLEY.
 #include <X11/extensions/extutil.h>
 #include <limits.h>
 
-#ifndef HAVE__XEATDATAWORDS
-static inline void _XEatDataWords(Display *dpy, unsigned long n)
-{
-# ifndef LONG64
-    if (n >= (ULONG_MAX >> 2))
-        _XIOError(dpy);
-# endif
-    _XEatData (dpy, n << 2);
-}
-#endif
-
 #ifdef DEBUG
 #include <stdio.h>
 #endif

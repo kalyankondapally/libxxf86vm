@@ -20,13 +20,7 @@ XORG_DEFAULT_OPTIONS
 XORG_CHECK_MALLOC_ZERO
 
 # Obtain compiler/linker options for depedencies
-PKG_CHECK_MODULES(XXF86VM, xproto x11 xextproto xext [xf86vidmodeproto >= 2.2.99.1])
-
-# Check for _XEatDataWords function that may be patched into older Xlib release
-SAVE_LIBS="$LIBS"
-LIBS="$XXF86VM_LIBS"
-AC_CHECK_FUNCS([_XEatDataWords])
-LIBS="$SAVE_LIBS"
+PKG_CHECK_MODULES(XXF86VM, xproto [x11 >= 1.6] xextproto xext [xf86vidmodeproto >= 2.2.99.1])
 
 AC_CONFIG_FILES([Makefile
 		src/Makefile
