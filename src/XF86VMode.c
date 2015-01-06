@@ -204,10 +204,9 @@ XF86VidModeGetModeLine(Display* dpy, int screen, int* dotclock,
 		       XF86VidModeModeLine* modeline)
 {
     XExtDisplayInfo *info = find_display (dpy);
-    xXF86VidModeGetModeLineReply rep;
-    xXF86OldVidModeGetModeLineReply oldrep;
     xXF86VidModeGetModeLineReq *req;
     int majorVersion, minorVersion;
+    CARD32 remaining_len;
     Bool result = True;
 
     XF86VidModeCheckExtension (dpy, info, False);
@@ -220,12 +219,16 @@ XF86VidModeGetModeLine(Display* dpy, int screen, int* dotclock,
     req->screen = screen;
 
     if (majorVersion < 2) {
+	xXF86OldVidModeGetModeLineReply oldrep;
+
 	if (!_XReply(dpy, (xReply *)&oldrep,
             (SIZEOF(xXF86OldVidModeGetModeLineReply) - SIZEOF(xReply)) >> 2, xFalse)) {
 	    UnlockDisplay(dpy);
 	    SyncHandle();
 	    return False;
 	}
+	remaining_len = oldrep.length -
+	    ((SIZEOF(xXF86OldVidModeGetModeLineReply) - SIZEOF(xReply)) >> 2);
 	*dotclock = oldrep.dotclock;
 	modeline->hdisplay   = oldrep.hdisplay;
 	modeline->hsyncstart = oldrep.hsyncstart;
@@ -239,12 +242,16 @@ XF86VidModeGetModeLine(Display* dpy, int screen, int* dotclock,
 	modeline->flags      = oldrep.flags;
 	modeline->privsize   = oldrep.privsize;
     } else {
+	xXF86VidModeGetModeLineReply rep;
+
 	if (!_XReply(dpy, (xReply *)&rep,
             (SIZEOF(xXF86VidModeGetModeLineReply) - SIZEOF(xReply)) >> 2, xFalse)) {
 	    UnlockDisplay(dpy);
 	    SyncHandle();
 	    return False;
 	}
+	remaining_len = rep.length -
+	    ((SIZEOF(xXF86VidModeGetModeLineReply) - SIZEOF(xReply)) >> 2);
 	*dotclock = rep.dotclock;
 	modeline->hdisplay   = rep.hdisplay;
 	modeline->hsyncstart = rep.hsyncstart;
@@ -265,8 +272,7 @@ XF86VidModeGetModeLine(Display* dpy, int screen, int* dotclock,
 	else
 	    modeline->private = NULL;
 	if (modeline->private == NULL) {
-	    _XEatDataWords(dpy, rep.length -
-		((SIZEOF(xXF86VidModeGetModeLineReply) - SIZEOF(xReply)) >> 2));
+	    _XEatDataWords(dpy, remaining_len);
 	    result = False;
 	} else
 	    _XRead(dpy, (char*)modeline->private, modeline->privsize * sizeof(INT32));
