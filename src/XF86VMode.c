@@ -218,7 +218,7 @@ XF86VidModeGetModeLine(Display* dpy, int screen, int* dotclock,
     req->xf86vidmodeReqType = X_XF86VidModeGetModeLine;
     req->screen = screen;
 
-    if (majorVersion < 2) {
+    if (_X_UNLIKELY(majorVersion < 2)) {
 	xXF86OldVidModeGetModeLineReply oldrep;
 
 	if (!_XReply(dpy, (xReply *)&oldrep,
@@ -346,7 +346,7 @@ XF86VidModeGetAllModeLines(Display* dpy, int screen, int* modecount,
 
     for (i = 0; i < rep.modecount; i++) {
         modelines[i] = mdinfptr++;
-	if (majorVersion < 2) {
+	if (_X_UNLIKELY(majorVersion < 2)) {
             _XRead(dpy, (char*)&oldxmdline, sizeof(xXF86OldVidModeModeInfo));
 	    modelines[i]->dotclock   = oldxmdline.dotclock;
 	    modelines[i]->hdisplay   = oldxmdline.hdisplay;
@@ -441,7 +441,7 @@ XF86VidModeAddModeLine(Display *dpy, int screen,
     XF86VidModeQueryVersion(dpy, &majorVersion, &minorVersion);
 
     LockDisplay(dpy);
-    if (majorVersion < 2) {
+    if (_X_UNLIKELY(majorVersion < 2)) {
 	GetOldReq(XF86VidModeAddModeLine, XF86OldVidModeAddModeLine, oldreq);
 	oldreq->reqType = info->codes->major_opcode;
 	oldreq->xf86vidmodeReqType = X_XF86VidModeAddModeLine;
@@ -551,7 +551,7 @@ XF86VidModeDeleteModeLine(Display *dpy, int screen,
     XF86VidModeQueryVersion(dpy, &majorVersion, &minorVersion);
 
     LockDisplay(dpy);
-    if (majorVersion < 2) {
+    if (_X_UNLIKELY(majorVersion < 2)) {
 	GetOldReq(XF86VidModeDeleteModeLine, XF86OldVidModeDeleteModeLine, oldreq);
 	oldreq->reqType = info->codes->major_opcode;
 	oldreq->xf86vidmodeReqType = X_XF86VidModeDeleteModeLine;
@@ -612,7 +612,7 @@ XF86VidModeModModeLine(Display *dpy, int screen, XF86VidModeModeLine* modeline)
     XF86VidModeQueryVersion(dpy, &majorVersion, &minorVersion);
 
     LockDisplay(dpy);
-    if (majorVersion < 2) {
+    if (_X_UNLIKELY(majorVersion < 2)) {
 	GetOldReq(XF86VidModeModModeLine, XF86OldVidModeModModeLine, oldreq);
 	oldreq->reqType = info->codes->major_opcode;
 	oldreq->xf86vidmodeReqType = X_XF86VidModeModModeLine;
@@ -674,7 +674,7 @@ XF86VidModeValidateModeLine(Display *dpy, int screen,
 
     LockDisplay(dpy);
 
-    if (majorVersion < 2) {
+    if (_X_UNLIKELY(majorVersion < 2)) {
 	GetOldReq(XF86VidModeValidateModeLine, XF86OldVidModeValidateModeLine, oldreq);
 	oldreq->reqType = info->codes->major_opcode;
 	oldreq->xf86vidmodeReqType = X_XF86VidModeValidateModeLine;
@@ -766,7 +766,7 @@ XF86VidModeSwitchToMode(Display* dpy, int screen, XF86VidModeModeInfo* modeline)
      */
 
     XF86VidModeQueryVersion(dpy, &majorVersion, &minorVersion);
-    if (majorVersion == 0 && minorVersion < 8) {
+    if (_X_UNLIKELY(majorVersion == 0 && minorVersion < 8)) {
 	protocolBug = True;
 #ifdef DEBUG
 	fprintf(stderr, "XF86VidModeSwitchToMode: Warning: Xserver is"
@@ -776,7 +776,7 @@ XF86VidModeSwitchToMode(Display* dpy, int screen, XF86VidModeModeInfo* modeline)
     }
 
     LockDisplay(dpy);
-    if (majorVersion < 2) {
+    if (_X_UNLIKELY(majorVersion < 2)) {
 	GetOldReq(XF86VidModeSwitchToMode, XF86OldVidModeSwitchToMode, oldreq);
 	oldreq->reqType = info->codes->major_opcode;
 	oldreq->xf86vidmodeReqType = X_XF86VidModeSwitchToMode;
